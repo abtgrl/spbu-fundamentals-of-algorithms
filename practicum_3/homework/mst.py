@@ -1,5 +1,6 @@
 from typing import Any
 
+from queue import PriorityQueue
 import matplotlib.pyplot as plt
 import networkx as nx
 
@@ -11,9 +12,29 @@ def prim_mst(G: nx.Graph, start_node="0") -> set[tuple[Any, Any]]:
     rest_set = set(G.nodes())  # set of nodes not yet included into MST
     mst_edges = set()  # set of edges constituting MST
 
-    ##########################
-    ### PUT YOUR CODE HERE ###
-    ##########################
+    mst_set.add(start_node)
+    rest_set.remove(start_node)
+
+    q = PriorityQueue()
+
+    for neighbor in G.neighbors(start_node):
+        edge = (start_node, neighbor)
+        q.put((G.edges[edge]["weight"], edge))
+
+    while len(rest_set):
+        weight, edge = q.get()
+        new_node = edge[1]
+
+        if new_node not in mst_set:
+            mst_edges.add(edge)
+            mst_set.add(new_node)
+            rest_set.remove(new_node)
+        else:
+            continue
+
+        for neighbor in G.neighbors(new_node):
+            edge = (new_node, neighbor)
+            q.put((G.edges[edge]["weight"], edge))
 
     return mst_edges
 
