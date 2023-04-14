@@ -15,7 +15,9 @@ def convex_bucket(points: NDArray) -> NDArray:
     clockwise_sorted_ch.append(points[1])
 
     for point in points[2:]:
-        while len(clockwise_sorted_ch) > 1 and not is_clockwise(clockwise_sorted_ch[-2], clockwise_sorted_ch[-1], point):
+        while len(clockwise_sorted_ch) > 1 and not is_clockwise(clockwise_sorted_ch[-2],
+                                                                clockwise_sorted_ch[-1],
+                                                                point):
             del clockwise_sorted_ch[-1]
         clockwise_sorted_ch.append(point)
 
